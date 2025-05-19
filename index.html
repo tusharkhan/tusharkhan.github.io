@@ -91,8 +91,22 @@
                     <p>I am a passionate software developer with a strong background in web development. With several years of experience in the industry, I've worked on a variety of projects that have helped me develop a diverse skill set.</p>
                     <p>I specialize in PHP, Golang, MySQL, and JavaScript development, with expertise in frameworks like Laravel and React. I'm dedicated to writing clean, efficient code and building scalable applications that deliver exceptional user experiences.</p>
                     <p>When I'm not coding, you can find me exploring new technologies, reading tech blogs, or contributing to open-source projects.</p>
-                    <a href="files/Touficul%20Islam.pdf" download="" class="btn flex items-center mt-6">
-                        <i class="fas fa-download mr-2"></i> Download Resume
+                    <div class="github-contributions mt-4 mb-6">
+                        <div class="flex justify-between items-center mb-2">
+                            <h4 class="text-lg font-semibold">My GitHub Contributions</h4>
+                            <div class="github-year-filter flex items-center">
+                                <span class="mr-2 text-sm">Year:</span>
+                                <select id="contributionYear" class="bg-white border border-gray-300 rounded-md px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-gray-400">
+                                    <!-- Years will be populated by JavaScript -->
+                                </select>
+                            </div>
+                        </div>
+                        <div id="githubContributionGraph">
+                            <img src="https://ghchart.rshah.org/1a1a1a/tusharkhan" alt="Tushar Khan's GitHub Contributions" class="w-full rounded-md shadow-sm">
+                        </div>
+                    </div>
+                    <a href="files/Touficul%20Islam.pdf" download="" class="btn mt-6">
+                        Download Resume
                     </a>
                 </div>
             </div>
@@ -158,8 +172,8 @@
                             <span class="project-tag">MySQL</span>
                             <span class="project-tag">JavaScript</span>
                         </div>
-                        <a href="#" class="btn flex items-center">
-                            <i class="fas fa-external-link-alt mr-2"></i> View Project
+                        <a href="#" class="btn text-center">
+                            View Project
                         </a>
                     </div>
                 </div>
@@ -174,8 +188,8 @@
                             <span class="project-tag">Docker</span>
                             <span class="project-tag">AWS</span>
                         </div>
-                        <a href="#" class="btn flex items-center">
-                            <i class="fas fa-external-link-alt mr-2"></i> View Project
+                        <a href="#" class="btn text-center">
+                            View Project
                         </a>
                     </div>
                 </div>
@@ -190,8 +204,8 @@
                             <span class="project-tag">Tailwind CSS</span>
                             <span class="project-tag">Chart.js</span>
                         </div>
-                        <a href="#" class="btn flex items-center">
-                            <i class="fas fa-external-link-alt mr-2"></i> View Project
+                        <a href="#" class="btn text-center">
+                            View Project
                         </a>
                     </div>
                 </div>
@@ -224,14 +238,14 @@
                     </div>
                 </div>
                 <div class="contact-form">
-                    <form id="contactForm">
+                    <form id="contactForm" action="https://formspree.io/f/your-formspree-endpoint" method="POST">
                         <div class="form-group">
                             <label for="name">Name</label>
                             <input type="text" id="name" name="name" required>
                         </div>
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="email" id="email" name="email" required>
+                            <input type="email" id="email" name="_replyto" required>
                         </div>
                         <div class="form-group">
                             <label for="subject">Subject</label>
@@ -241,6 +255,8 @@
                             <label for="message">Message</label>
                             <textarea id="message" name="message" required></textarea>
                         </div>
+                        <input type="hidden" name="_subject" value="New message from portfolio website">
+                        <input type="text" name="_gotcha" style="display:none">
                         <button type="submit" class="btn w-full flex justify-center items-center">
                             <i class="fas fa-paper-plane mr-2"></i> Send Message
                         </button>
