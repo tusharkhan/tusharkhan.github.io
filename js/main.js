@@ -9,6 +9,16 @@ document.addEventListener('DOMContentLoaded', function() {
     const githubContributionGraph = document.getElementById('githubContributionGraph');
 
     if (contributionYearSelect && githubContributionGraph) {
+        // Add loading spinner and overlay to the contribution graph container
+        const loadingSpinner = document.createElement('div');
+        loadingSpinner.className = 'loading-spinner';
+
+        const loadingOverlay = document.createElement('div');
+        loadingOverlay.className = 'loading-overlay';
+
+        githubContributionGraph.appendChild(loadingOverlay);
+        githubContributionGraph.appendChild(loadingSpinner);
+
         // Populate the year dropdown with the last 5 years
         const startYear = 2019; // You can adjust this as needed
         for (let year = currentYear; year >= startYear; year--) {
@@ -18,8 +28,23 @@ document.addEventListener('DOMContentLoaded', function() {
             contributionYearSelect.appendChild(option);
         }
 
+        // Function to show loading state
+        function showLoading() {
+            loadingSpinner.style.display = 'block';
+            loadingOverlay.style.display = 'block';
+        }
+
+        // Function to hide loading state
+        function hideLoading() {
+            loadingSpinner.style.display = 'none';
+            loadingOverlay.style.display = 'none';
+        }
+
         // Function to update the contribution graph based on selected year
         function updateContributionGraph(year) {
+            // Show loading state
+            showLoading();
+
             // The ghchart.rshah.org service doesn't directly support year filtering
             // We'll use a workaround by adding a timestamp parameter to force a refresh
             // and display a message indicating the selected year
@@ -27,13 +52,45 @@ document.addEventListener('DOMContentLoaded', function() {
             const username = 'tusharkhan'; // GitHub username
             const color = '1a1a1a'; // Color for the graph
 
-            // Update the graph container with the image and year indicator
-            githubContributionGraph.innerHTML = `
+            // Create a temporary container for the new content
+            const tempContainer = document.createElement('div');
+            tempContainer.innerHTML = `
                 <div class="text-center text-sm text-gray-500 mb-2">Showing contributions for ${year}</div>
                 <img src="https://ghchart.rshah.org/${color}/${username}?year=${year}" 
                      alt="Tushar Khan's GitHub Contributions for ${year}" 
                      class="w-full rounded-md shadow-sm">
             `;
+
+            // Wait for the image to load before updating the container
+            const img = tempContainer.querySelector('img');
+            img.onload = function() {
+                // Update the graph container with the loaded content
+                githubContributionGraph.innerHTML = tempContainer.innerHTML;
+
+                // Re-append the loading elements
+                githubContributionGraph.appendChild(loadingOverlay);
+                githubContributionGraph.appendChild(loadingSpinner);
+
+                // Hide loading state
+                hideLoading();
+            };
+
+            img.onerror = function() {
+                // In case of error, still update the container but show an error message
+                githubContributionGraph.innerHTML = `
+                    <div class="text-center text-sm text-gray-500 mb-2">Showing contributions for ${year}</div>
+                    <div class="text-center p-4 bg-red-100 text-red-700 rounded-md">
+                        Failed to load contributions. Please try again later.
+                    </div>
+                `;
+
+                // Re-append the loading elements
+                githubContributionGraph.appendChild(loadingOverlay);
+                githubContributionGraph.appendChild(loadingSpinner);
+
+                // Hide loading state
+                hideLoading();
+            };
         }
 
         // Set initial graph to current year
