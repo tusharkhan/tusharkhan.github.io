@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
         githubContributionGraph.appendChild(loadingSpinner);
 
         // Populate the year dropdown with the last 5 years
-        const startYear = 2019; // You can adjust this as needed
+        const startYear = 2017; // You can adjust this as needed
         for (let year = currentYear; year >= startYear; year--) {
             const option = document.createElement('option');
             option.value = year;
