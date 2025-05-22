@@ -258,6 +258,37 @@ header {
     position: relative;
 }
 
+/* GitHub Contribution Styles */
+.contribution-summary, .recent-activity {
+    margin-bottom: 1rem;
+}
+
+.contribution-summary h5, .recent-activity h5 {
+    color: var(--text-dark);
+}
+
+.recent-activity ul {
+    list-style: none;
+}
+
+.recent-activity li {
+    transition: var(--transition-fast);
+}
+
+.recent-activity li:hover {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+.recent-activity a {
+    color: #1a1a1a;
+    font-weight: 500;
+    transition: var(--transition-fast);
+}
+
+.recent-activity a:hover {
+    color: #000;
+}
+
 /* Loading Spinner */
 .loading-spinner {
     display: none;

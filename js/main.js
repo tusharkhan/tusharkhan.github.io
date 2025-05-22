@@ -45,27 +45,41 @@ document.addEventListener('DOMContentLoaded', function() {
             // Show loading state
             showLoading();
 
-            // The ghchart.rshah.org service doesn't directly support year filtering
-            // We'll use a workaround by adding a timestamp parameter to force a refresh
-            // and display a message indicating the selected year
-
             const username = 'tusharkhan'; // GitHub username
-            const color = '1a1a1a'; // Color for the graph
+            const color = '1a1a1a'; // Color for the graph (matte black)
 
-            // Create a temporary container for the new content
-            const tempContainer = document.createElement('div');
-            tempContainer.innerHTML = `
-                <div class="text-center text-sm text-gray-500 mb-2">Showing contributions for ${year}</div>
-                <img src="https://ghchart.rshah.org/${color}/${username}?year=${year}" 
-                     alt="Tushar Khan's GitHub Contributions for ${year}" 
-                     class="w-full rounded-md shadow-sm">
-            `;
+            // Create a new image element
+            const img = new Image();
 
-            // Wait for the image to load before updating the container
-            const img = tempContainer.querySelector('img');
+            // Set up load event handler
             img.onload = function() {
-                // Update the graph container with the loaded content
-                githubContributionGraph.innerHTML = tempContainer.innerHTML;
+                // Clear the container
+                githubContributionGraph.innerHTML = '';
+
+                // Add year indicator and disclaimer
+                const yearIndicator = document.createElement('div');
+                yearIndicator.className = 'text-center text-sm text-gray-500 mb-2';
+                yearIndicator.textContent = `Showing contributions for ${year}`;
+                githubContributionGraph.appendChild(yearIndicator);
+
+                // Add disclaimer about year filter limitation
+                const disclaimer = document.createElement('div');
+                disclaimer.className = 'text-center text-xs text-gray-400 mb-4';
+                disclaimer.textContent = `Note: The graph shows your current GitHub contributions pattern.`;
+                githubContributionGraph.appendChild(disclaimer);
+
+                // Add the loaded image
+                githubContributionGraph.appendChild(img);
+
+                // Add link to GitHub profile
+                const profileLink = document.createElement('div');
+                profileLink.className = 'text-center mt-4';
+                profileLink.innerHTML = `
+                    <a href="https://github.com/${username}" target="_blank" class="text-blue-600 hover:underline text-sm">
+                        View full profile on GitHub <i class="fas fa-external-link-alt ml-1"></i>
+                    </a>
+                `;
+                githubContributionGraph.appendChild(profileLink);
 
                 // Re-append the loading elements
                 githubContributionGraph.appendChild(loadingOverlay);
@@ -75,8 +89,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 hideLoading();
             };
 
+            // Set up error event handler
             img.onerror = function() {
-                // In case of error, still update the container but show an error message
+                // Show error message
                 githubContributionGraph.innerHTML = `
                     <div class="text-center text-sm text-gray-500 mb-2">Showing contributions for ${year}</div>
                     <div class="text-center p-4 bg-red-100 text-red-700 rounded-md">
@@ -91,6 +106,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Hide loading state
                 hideLoading();
             };
+
+            // Set image attributes
+            // Note: ghchart.rshah.org doesn't actually support year filtering
+            // It always shows the current year's contributions
+            // The timestamp parameter is just to prevent caching
+            img.src = `https://ghchart.rshah.org/${color}/${username}?t=${new Date().getTime()}`;
+            img.alt = `${username}'s GitHub Contributions`;
+            img.className = 'w-full rounded-md shadow-sm';
         }
 
         // Set initial graph to current year
