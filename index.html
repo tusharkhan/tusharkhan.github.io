@@ -308,14 +308,14 @@
                     </div>
                 </div>
                 <div class="contact-form">
-                    <form id="contactForm" action="https://formspree.io/f/your-formspree-endpoint" method="POST">
+                    <form id="contactForm" method="POST" action="https://formspree.io/f/xdkgvegr" enctype="multipart/form-data" novalidate>
                         <div class="form-group">
                             <label for="name">Name</label>
                             <input type="text" id="name" name="name" required>
                         </div>
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="email" id="email" name="_replyto" required>
+                            <input type="email" id="email" name="email" required>
                         </div>
                         <div class="form-group">
                             <label for="subject">Subject</label>
@@ -325,12 +325,13 @@
                             <label for="message">Message</label>
                             <textarea id="message" name="message" required></textarea>
                         </div>
-                        <input type="hidden" name="_subject" value="New message from portfolio website">
+                        <input type="hidden" name="_subject" value="Portfolio website">
                         <input type="text" name="_gotcha" style="display:none">
                         <button type="submit" class="btn w-full flex justify-center items-center">
                             <i class="fas fa-paper-plane mr-2"></i> Send Message
                         </button>
                     </form>
+                    <p id="my-form-status"></p>
                 </div>
             </div>
         </div>

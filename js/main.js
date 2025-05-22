@@ -138,49 +138,55 @@ document.addEventListener('DOMContentLoaded', function() {
     // Form submission handling with Formspree
     const contactForm = document.getElementById('contactForm');
     if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-            // Formspree will handle the form submission
-            // We don't need to prevent default or manually send the data
+        contactForm.addEventListener("submit", handleSubmit)
+    }
 
-            // Optional: Show a loading state
-            const submitBtn = this.querySelector('button[type="submit"]');
-            const originalText = submitBtn.innerHTML;
-            submitBtn.innerHTML = 'Sending...';
-            submitBtn.disabled = true;
+    async function handleSubmit(event) {
+        event.preventDefault();
+        let name = this.querySelector('input[name="name"]').value;
+        let email = this.querySelector('input[name="email"]').value;
+        let message = this.querySelector('textarea[name="message"]').value;
+        let subject = this.querySelector('input[name="subject"]').value;
+        let _subject = this.querySelector('input[name="_subject"]').value;
+        let subjectText = _subject + ' : ' + subject;
 
-            // We'll add a success handler for when the form is submitted
-            // This is optional as Formspree will redirect to a success page by default
-            fetch(this.action, {
-                method: this.method,
-                body: new FormData(this),
-                headers: {
-                    'Accept': 'application/json'
-                }
-            })
-            .then(response => {
-                if (response.ok) {
-                    // Form submitted successfully
-                    alert('Thank you for your message! I will get back to you soon.');
-                    this.reset();
-                } else {
-                    // Error in form submission
-                    response.json().then(data => {
-                        alert('Oops! There was a problem submitting your form. ' + (data.error || ''));
-                    });
-                }
-            })
-            .catch(error => {
-                // Network error
-                alert('Oops! There was a problem submitting your form. Please try again later.');
-            })
-            .finally(() => {
-                // Reset button state
+        const submitBtn = this.querySelector('button[type="submit"]');
+        const originalText = submitBtn.innerHTML;
+        submitBtn.innerHTML = 'Sending...';
+        submitBtn.disabled = true;
+
+        var status = document.getElementById("my-form-status");
+        var data = new FormData(event.target);
+        fetch(event.target.action, {
+            method: contactForm.method,
+            body: JSON.stringify({
+                name : name,
+                email : email,
+                message : message,
+                subject : subjectText
+            }),
+            headers: {
+                'Accept': 'application/json'
+            }
+        }).then(async response => {
+            if (response.ok) {
+                status.innerHTML = "Thanks for your submission!";
+                contactForm.reset();
                 submitBtn.innerHTML = originalText;
-                submitBtn.disabled = false;
-            });
-
-            // Prevent the default form submission since we're handling it with fetch
-            e.preventDefault();
+            } else {
+                try {
+                    const data = await response.json();
+                    if (Object.hasOwn(data, 'errors')) {
+                        status.innerHTML = data["errors"].map(error => error["message"]).join(", ");
+                    } else {
+                        status.innerHTML = "Oops! There was a problem submitting your form";
+                    }
+                } catch (e) {
+                    status.innerHTML = "Oops! There was a problem submitting your form";
+                }
+            }
+        }).catch(error => {
+            status.innerHTML = "Oops! There was a problem submitting your form";
         });
     }
 
