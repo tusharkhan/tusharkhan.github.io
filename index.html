@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tushar Khan - Portfolio</title>
+    <title>Tushar Khan - Full Stack Developer</title>
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -15,13 +17,45 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#0066cc',
-                        secondary: '#00ccff',
-                        dark: '#333333',
-                        light: '#f8f9fa',
+                        primary: '#6366F1',
+                        secondary: '#8B5CF6',
+                        accent: '#EC4899',
+                        dark: '#0F172A',
+                        darker: '#020617',
+                        light: '#F8FAFC',
                     },
                     fontFamily: {
-                        sans: ['Poppins', 'sans-serif'],
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                    },
+                    animation: {
+                        'gradient': 'gradient 8s linear infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'glow': 'glow 2s ease-in-out infinite alternate',
+                        'slide-up': 'slideUp 0.5s ease-out',
+                        'slide-down': 'slideDown 0.5s ease-out',
+                    },
+                    keyframes: {
+                        gradient: {
+                            '0%, 100%': { backgroundPosition: '0% 50%' },
+                            '50%': { backgroundPosition: '100% 50%' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        glow: {
+                            'from': { boxShadow: '0 0 20px rgba(99, 102, 241, 0.5)' },
+                            'to': { boxShadow: '0 0 30px rgba(139, 92, 246, 0.8)' },
+                        },
+                        slideUp: {
+                            'from': { transform: 'translateY(100px)', opacity: '0' },
+                            'to': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        slideDown: {
+                            'from': { transform: 'translateY(-100px)', opacity: '0' },
+                            'to': { transform: 'translateY(0)', opacity: '1' },
+                        },
                     },
                 }
             }
@@ -30,126 +64,327 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/styles.css">
 </head>
-<body class="font-sans bg-light">
+<body class="font-sans bg-darker text-white antialiased overflow-x-hidden">
+    <!-- Animated Background -->
+    <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+        <div class="absolute top-0 -left-4 w-96 h-96 bg-primary opacity-10 rounded-full mix-blend-multiply filter blur-3xl animate-float"></div>
+        <div class="absolute top-0 -right-4 w-96 h-96 bg-secondary opacity-10 rounded-full mix-blend-multiply filter blur-3xl animate-float" style="animation-delay: 2s;"></div>
+        <div class="absolute -bottom-8 left-20 w-96 h-96 bg-accent opacity-10 rounded-full mix-blend-multiply filter blur-3xl animate-float" style="animation-delay: 4s;"></div>
+    </div>
+
     <!-- Header -->
-    <header class="bg-white shadow-md fixed w-full top-0 z-50">
+    <header class="glass-header fixed w-full top-0 z-50 backdrop-blur-md bg-darker/80 border-b border-white/5">
         <div class="container">
-            <nav class="navbar">
-                <a href="#" class="logo">Tushar Khan</a>
-                <ul class="nav-links">
-                    <li><a href="#home" class="hover:text-primary transition-colors">Home</a></li>
-                    <li><a href="#about" class="hover:text-primary transition-colors">About</a></li>
-                    <li><a href="#skills" class="hover:text-primary transition-colors">Skills</a></li>
-                    <li><a href="#projects" class="hover:text-primary transition-colors">Projects</a></li>
-                    <li><a href="#contact" class="hover:text-primary transition-colors">Contact</a></li>
+            <nav class="navbar flex justify-between items-center py-4">
+                <a href="#" class="logo font-display text-2xl font-bold bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent animate-gradient">
+                    TK<span class="text-white/40">.</span>
+                </a>
+                <ul class="nav-links hidden md:flex items-center space-x-8">
+                    <li><a href="#home" class="nav-link relative text-sm font-medium text-white/80 hover:text-white transition-colors">Home</a></li>
+                    <li><a href="#about" class="nav-link relative text-sm font-medium text-white/80 hover:text-white transition-colors">About</a></li>
+                    <li><a href="#skills" class="nav-link relative text-sm font-medium text-white/80 hover:text-white transition-colors">Skills</a></li>
+                    <li><a href="#projects" class="nav-link relative text-sm font-medium text-white/80 hover:text-white transition-colors">Projects</a></li>
+                    <li><a href="#contact" class="btn-primary px-6 py-2 rounded-full text-sm font-semibold">Let's Talk</a></li>
                 </ul>
-                <div class="hamburger">
-                    <span></span>
-                    <span></span>
-                    <span></span>
+                <div class="hamburger md:hidden cursor-pointer">
+                    <span class="block w-6 h-0.5 bg-white mb-1 transition-all"></span>
+                    <span class="block w-6 h-0.5 bg-white mb-1 transition-all"></span>
+                    <span class="block w-6 h-0.5 bg-white transition-all"></span>
                 </div>
             </nav>
         </div>
     </header>
 
+    <!-- Mobile Menu -->
+    <div class="mobile-menu fixed inset-0 z-40 bg-darker/95 backdrop-blur-lg hidden">
+        <div class="flex flex-col items-center justify-center h-full space-y-8">
+            <a href="#home" class="mobile-nav-link text-3xl font-bold text-white/80 hover:text-white transition-colors">Home</a>
+            <a href="#about" class="mobile-nav-link text-3xl font-bold text-white/80 hover:text-white transition-colors">About</a>
+            <a href="#skills" class="mobile-nav-link text-3xl font-bold text-white/80 hover:text-white transition-colors">Skills</a>
+            <a href="#projects" class="mobile-nav-link text-3xl font-bold text-white/80 hover:text-white transition-colors">Projects</a>
+            <a href="#contact" class="mobile-nav-link text-3xl font-bold text-white/80 hover:text-white transition-colors">Contact</a>
+        </div>
+    </div>
+
     <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1 class="text-4xl md:text-5xl font-bold mb-4 leading-tight">
-                    Hi, I'm <span class="highlight">Tushar Khan</span>
+    <section id="home" class="hero relative min-h-screen flex items-center pt-20">
+        <div class="container relative z-10">
+            <div class="max-w-4xl mx-auto text-center">
+                <!-- Animated Badge -->
+                <div class="inline-flex items-center px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm mb-8" data-aos="fade-down">
+                    <span class="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></span>
+                    <span class="text-sm text-white/70">Available for freelance work</span>
+                </div>
+                
+                <!-- Main Heading -->
+                <h1 class="text-5xl md:text-7xl lg:text-8xl font-display font-black mb-6 leading-tight" data-aos="fade-up" data-aos-delay="100">
+                    Crafting Digital
+                    <span class="block bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent animate-gradient bg-300%">
+                        Experiences
+                    </span>
                 </h1>
-                <p class="text-lg text-gray-600 mb-8">
-                    I'm a passionate software developer with expertise in 
-                    <span class="highlight">PHP</span>, 
-                    <span class="highlight">Golang</span>, 
-                    <span class="highlight">MySQL</span>, 
-                    <span class="highlight">JavaScript</span>, 
-                    <span class="highlight">Laravel</span>, and 
-                    <span class="highlight">React</span>. 
-                    I love solving complex problems and turning ideas into reality.
+                
+                <!-- Subtitle -->
+                <p class="text-lg md:text-xl text-white/60 max-w-2xl mx-auto mb-12 leading-relaxed" data-aos="fade-up" data-aos-delay="200">
+                    Full-stack developer specializing in building exceptional digital products. 
+                    Transforming ideas into elegant solutions with <span class="text-primary font-semibold">PHP</span>, 
+                    <span class="text-secondary font-semibold">Golang</span>, 
+                    <span class="text-accent font-semibold">React</span>, and more.
                 </p>
-                <div class="flex space-x-4">
-                    <a href="#contact" class="btn">Get In Touch</a>
-                    <a href="#projects" class="border-2 border-primary text-primary hover:bg-primary hover:text-white transition-colors px-6 py-3 rounded-md font-semibold">View Projects</a>
+                
+                <!-- CTA Buttons -->
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center" data-aos="fade-up" data-aos-delay="300">
+                    <a href="#projects" class="btn-primary group px-8 py-4 rounded-full text-base font-semibold inline-flex items-center">
+                        View My Work
+                        <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                    <a href="#contact" class="btn-secondary px-8 py-4 rounded-full text-base font-semibold inline-flex items-center">
+                        <i class="fas fa-paper-plane mr-2"></i>
+                        Get In Touch
+                    </a>
+                </div>
+                
+                <!-- Tech Stack Icons -->
+                <div class="mt-20 flex flex-wrap justify-center gap-8" data-aos="fade-up" data-aos-delay="400">
+                    <div class="tech-icon group">
+                        <i class="fab fa-php text-3xl text-white/40 group-hover:text-primary transition-colors"></i>
+                    </div>
+                    <div class="tech-icon group">
+                        <i class="fab fa-golang text-3xl text-white/40 group-hover:text-secondary transition-colors"></i>
+                    </div>
+                    <div class="tech-icon group">
+                        <i class="fab fa-react text-3xl text-white/40 group-hover:text-accent transition-colors"></i>
+                    </div>
+                    <div class="tech-icon group">
+                        <i class="fab fa-laravel text-3xl text-white/40 group-hover:text-primary transition-colors"></i>
+                    </div>
+                    <div class="tech-icon group">
+                        <i class="fab fa-js text-3xl text-white/40 group-hover:text-yellow-400 transition-colors"></i>
+                    </div>
+                    <div class="tech-icon group">
+                        <i class="fab fa-docker text-3xl text-white/40 group-hover:text-blue-400 transition-colors"></i>
+                    </div>
                 </div>
             </div>
+        </div>
+        
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <i class="fas fa-chevron-down text-white/30 text-2xl"></i>
         </div>
     </section>
 
     <!-- About Section -->
-    <section id="about" class="section about">
+    <section id="about" class="section relative py-20 md:py-32">
         <div class="container">
-            <h2 class="section-title">About Me</h2>
-            <div class="about-content">
-                <div class="about-image">
-                    <!-- Replace with your actual image -->
-                    <img src="images/tusharkhan.jpg" alt="Tushar Khan">
-                </div>
-                <div class="about-text">
-                    <h3>Who am I?</h3>
-                    <p>I am a passionate software developer with a strong background in web development. With several years of experience in the industry, I've worked on a variety of projects that have helped me develop a diverse skill set.</p>
-                    <p>I specialize in PHP, Golang, MySQL, and JavaScript development, with expertise in frameworks like Laravel and React. I'm dedicated to writing clean, efficient code and building scalable applications that deliver exceptional user experiences.</p>
-                    <p>When I'm not coding, you can find me exploring new technologies, reading tech blogs, or contributing to open-source projects.</p>
-                    <div class="github-contributions mt-4 mb-6">
-                        <div class="flex justify-between items-center mb-2">
-                            <h4 class="text-lg font-semibold">My GitHub Contributions</h4>
-                            <div class="github-year-filter flex items-center">
-                                <span class="mr-2 text-sm">Year:</span>
-                                <select id="contributionYear" class="bg-white border border-gray-300 rounded-md px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-gray-400">
-                                    <!-- Years will be populated by JavaScript -->
-                                </select>
-                            </div>
-                        </div>
-                        <div id="githubContributionGraph">
-                            <img src="https://ghchart.rshah.org/1a1a1a/tusharkhan" alt="Tushar Khan's GitHub Contributions" class="w-full rounded-md shadow-sm">
+            <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                <!-- Image Column -->
+                <div class="relative" data-aos="fade-right">
+                    <div class="relative">
+                        <!-- Gradient Border Effect -->
+                        <div class="absolute -inset-1 bg-gradient-to-r from-primary via-secondary to-accent rounded-2xl blur opacity-30 animate-pulse"></div>
+                        <div class="relative glass-card rounded-2xl p-2">
+                            <img src="images/tusharkhan.jpg" alt="Tushar Khan" class="w-full rounded-xl">
                         </div>
                     </div>
-                    <a href="files/Touficul%20Islam.pdf" download="" class="btn mt-6">
-                        Download Resume
-                    </a>
+                    
+                    <!-- Floating Stats -->
+                    <div class="absolute -bottom-6 -right-6 glass-card rounded-xl p-4 animate-float" data-aos="fade-up" data-aos-delay="200">
+                        <div class="text-center">
+                            <div class="text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">5+</div>
+                            <div class="text-sm text-white/60">Years Experience</div>
+                        </div>
+                    </div>
+                    
+                    <div class="absolute -top-6 -left-6 glass-card rounded-xl p-4 animate-float" style="animation-delay: 2s;" data-aos="fade-up" data-aos-delay="300">
+                        <div class="text-center">
+                            <div class="text-3xl font-bold bg-gradient-to-r from-accent to-secondary bg-clip-text text-transparent">20+</div>
+                            <div class="text-sm text-white/60">Projects</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Content Column -->
+                <div data-aos="fade-left">
+                    <h2 class="section-title text-left mb-6">
+                        <span class="text-white/30 font-display text-sm font-semibold tracking-wider uppercase">About Me</span>
+                        <span class="block text-4xl md:text-5xl font-display font-bold mt-2">
+                            Turning Vision Into <span class="gradient-text">Reality</span>
+                        </span>
+                    </h2>
+                    
+                    <div class="space-y-4 text-white/70 leading-relaxed">
+                        <p>
+                            I'm a passionate <span class="text-white font-semibold">full-stack developer</span> with expertise in creating scalable, 
+                            high-performance web applications. With over 8 years of experience, I've mastered the art of 
+                            transforming complex problems into elegant, user-friendly solutions.
+                        </p>
+                        <p>
+                            My journey in software development has taken me through diverse projects—from building 
+                            <span class="text-primary font-semibold">e-commerce platforms</span> and 
+                            <span class="text-secondary font-semibold">booking systems</span> to developing 
+                            <span class="text-accent font-semibold">microservices</span> and automation tools.
+                        </p>
+                        <p>
+                            When I'm not coding, you'll find me exploring new technologies, contributing to open-source 
+                            projects, or sharing knowledge with the developer community.
+                        </p>
+                    </div>
+                    
+                    <!-- GitHub Contributions -->
+                    <div class="mt-8 glass-card rounded-xl p-6" data-aos="fade-up" data-aos-delay="100">
+                        <div class="flex justify-between items-center mb-4">
+                            <h4 class="text-lg font-semibold text-white">GitHub Activity</h4>
+                            <select id="contributionYear" class="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary transition-colors">
+                                <!-- Years will be populated by JavaScript -->
+                            </select>
+                        </div>
+                        <div id="githubContributionGraph" class="relative">
+                            <img src="https://ghchart.rshah.org/6366F1/tusharkhan" alt="Tushar Khan's GitHub Contributions" class="w-full rounded-lg opacity-80">
+                        </div>
+                    </div>
+                    
+                    <!-- Download Resume Button -->
+                    <div class="mt-8">
+                        <a href="files/Touficul%20Islam.pdf" download class="btn-primary inline-flex items-center px-6 py-3 rounded-full font-semibold">
+                            <i class="fas fa-download mr-2"></i>
+                            Download Resume
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Skills Section -->
-    <section id="skills" class="section skills">
+    <section id="skills" class="section relative py-20 md:py-32 bg-gradient-to-b from-transparent to-dark/50">
         <div class="container">
-            <h2 class="section-title">My Skills</h2>
-            <div class="skills-container">
-                <div class="skill-card">
-                    <h3><i class="fas fa-code text-primary mr-2"></i>Backend Development</h3>
-                    <ul class="skill-list">
-                        <li>PHP (Laravel, CodeIgniter)</li>
-                        <li>Golang</li>
-                        <li>RESTful APIs</li>
-                        <li>Microservices</li>
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="section-title">
+                    <span class="text-white/30 font-display text-sm font-semibold tracking-wider uppercase">Expertise</span>
+                    <span class="block text-4xl md:text-5xl font-display font-bold mt-2">
+                        Skills & <span class="gradient-text">Technologies</span>
+                    </span>
+                </h2>
+                <p class="text-white/60 mt-4 max-w-2xl mx-auto">
+                    A comprehensive toolkit for building modern, scalable applications
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Backend Development -->
+                <div class="skill-card group" data-aos="fade-up" data-aos-delay="0">
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="p-4 rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 group-hover:from-primary/30 group-hover:to-primary/10 transition-all">
+                            <i class="fas fa-code text-3xl text-primary"></i>
+                        </div>
+                        <div class="text-5xl font-bold text-white/5 group-hover:text-white/10 transition-all">01</div>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-white">Backend Development</h3>
+                    <ul class="space-y-3 text-white/60">
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-primary mr-2 text-sm"></i>
+                            <span>PHP (Laravel, CodeIgniter)</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-primary mr-2 text-sm"></i>
+                            <span>Golang</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-primary mr-2 text-sm"></i>
+                            <span>RESTful APIs</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-primary mr-2 text-sm"></i>
+                            <span>Microservices</span>
+                        </li>
                     </ul>
                 </div>
-                <div class="skill-card">
-                    <h3><i class="fas fa-database text-primary mr-2"></i>Database</h3>
-                    <ul class="skill-list">
-                        <li>MySQL</li>
-                        <li>PostgreSQL</li>
+                
+                <!-- Database -->
+                <div class="skill-card group" data-aos="fade-up" data-aos-delay="100">
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="p-4 rounded-xl bg-gradient-to-br from-secondary/20 to-secondary/5 group-hover:from-secondary/30 group-hover:to-secondary/10 transition-all">
+                            <i class="fas fa-database text-3xl text-secondary"></i>
+                        </div>
+                        <div class="text-5xl font-bold text-white/5 group-hover:text-white/10 transition-all">02</div>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-white">Database</h3>
+                    <ul class="space-y-3 text-white/60">
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-secondary mr-2 text-sm"></i>
+                            <span>MySQL</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-secondary mr-2 text-sm"></i>
+                            <span>PostgreSQL</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-secondary mr-2 text-sm"></i>
+                            <span>Database Design</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-secondary mr-2 text-sm"></i>
+                            <span>Query Optimization</span>
+                        </li>
                     </ul>
                 </div>
-                <div class="skill-card">
-                    <h3><i class="fas fa-laptop-code text-primary mr-2"></i>Frontend Development</h3>
-                    <ul class="skill-list">
-                        <li>JavaScript (ES6+)</li>
-                        <li>React.js</li>
-                        <li>HTML5 & CSS3</li>
-                        <li>Tailwind CSS</li>
+                
+                <!-- Frontend Development -->
+                <div class="skill-card group" data-aos="fade-up" data-aos-delay="200">
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="p-4 rounded-xl bg-gradient-to-br from-accent/20 to-accent/5 group-hover:from-accent/30 group-hover:to-accent/10 transition-all">
+                            <i class="fas fa-laptop-code text-3xl text-accent"></i>
+                        </div>
+                        <div class="text-5xl font-bold text-white/5 group-hover:text-white/10 transition-all">03</div>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-white">Frontend Development</h3>
+                    <ul class="space-y-3 text-white/60">
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-accent mr-2 text-sm"></i>
+                            <span>JavaScript (ES6+)</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-accent mr-2 text-sm"></i>
+                            <span>React.js</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-accent mr-2 text-sm"></i>
+                            <span>HTML5 & CSS3</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-accent mr-2 text-sm"></i>
+                            <span>Tailwind CSS</span>
+                        </li>
                     </ul>
                 </div>
-                <div class="skill-card">
-                    <h3><i class="fas fa-server text-primary mr-2"></i>DevOps & Tools</h3>
-                    <ul class="skill-list">
-                        <li>Docker</li>
-                        <li>Git & GitHub</li>
-                        <li>CI/CD Pipelines</li>
-                        <li>AWS, Digital Ocean</li>
+                
+                <!-- DevOps & Tools -->
+                <div class="skill-card group" data-aos="fade-up" data-aos-delay="300">
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="p-4 rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-500/5 group-hover:from-blue-500/30 group-hover:to-blue-500/10 transition-all">
+                            <i class="fas fa-server text-3xl text-blue-400"></i>
+                        </div>
+                        <div class="text-5xl font-bold text-white/5 group-hover:text-white/10 transition-all">04</div>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-white">DevOps & Tools</h3>
+                    <ul class="space-y-3 text-white/60">
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-blue-400 mr-2 text-sm"></i>
+                            <span>Docker</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-blue-400 mr-2 text-sm"></i>
+                            <span>Git & GitHub</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-blue-400 mr-2 text-sm"></i>
+                            <span>CI/CD Pipelines</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-blue-400 mr-2 text-sm"></i>
+                            <span>AWS, Digital Ocean</span>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -157,227 +392,408 @@
     </section>
 
     <!-- Projects Section -->
-    <section id="projects" class="section projects">
+    <section id="projects" class="section relative py-20 md:py-32">
         <div class="container">
-            <h2 class="section-title">My Projects</h2>
-            <div class="projects-container">
-
-                <div class="project-card">
-                    <div class="project-image" style="background-image: url('images/wcs.png');"></div>
-                    <div class="project-info">
-                        <h3>Wcs Studio</h3>
-                        <p>An automation process for WordPress. Create site, backup, SSL, plan, team. Design, customize, and launch your store in minutes.
-                            zero coding, maximum control.</p>
-                        <div class="project-tags">
-                            <span class="project-tag">PHP</span>
-                            <span class="project-tag">Laravel</span>
-                            <span class="project-tag">MySQL</span>
-                            <span class="project-tag">JavaScript</span>
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="section-title">
+                    <span class="text-white/30 font-display text-sm font-semibold tracking-wider uppercase">Portfolio</span>
+                    <span class="block text-4xl md:text-5xl font-display font-bold mt-2">
+                        Featured <span class="gradient-text">Projects</span>
+                    </span>
+                </h2>
+                <p class="text-white/60 mt-4 max-w-2xl mx-auto">
+                    Showcasing innovation and technical excellence across diverse industries
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Project 1: WCS Studio -->
+                <div class="project-card group" data-aos="fade-up" data-aos-delay="0">
+                    <div class="project-image-wrapper">
+                        <img src="images/wcs.png" alt="WCS Studio" class="project-image">
+                        <div class="project-overlay">
+                            <a href="https://wcstudio.com" target="_blank" class="project-link">
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
                         </div>
-                        <a href="https://wcstudio.com" class="btn text-center" target="_blank">
-                            View Project
+                    </div>
+                    <div class="project-content">
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="text-xl font-bold text-white">WCS Studio</h3>
+                            <span class="text-xs px-2 py-1 rounded-full bg-primary/20 text-primary">Featured</span>
+                        </div>
+                        <p class="text-white/60 text-sm mb-4 line-clamp-3">
+                            Complete WordPress automation platform. Create sites, manage backups, SSL, plans, and teams. Launch stores in minutes with zero coding.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="tech-badge">PHP</span>
+                            <span class="tech-badge">Laravel</span>
+                            <span class="tech-badge">MySQL</span>
+                            <span class="tech-badge">JavaScript</span>
+                        </div>
+                        <a href="https://wcstudio.com" target="_blank" class="project-btn">
+                            Visit Site <i class="fas fa-arrow-right ml-2 text-xs"></i>
                         </a>
                     </div>
                 </div>
 
-                <div class="project-card">
-                    <div class="project-image" style="background-image: url('images/shukrantrip.png');"></div>
-                    <div class="project-info">
-                        <h3>Shukran Trip</h3>
-                        <p>Shukran Trip is a Air ticket booking system . Where you can book a ticket for your destination. Also has support for Agents. It also includes Visa processing and Hotel booking</p>
-                        <div class="project-tags">
-                            <span class="project-tag">Laravel</span>
-                            <span class="project-tag">ReactJs</span>
-                            <span class="project-tag">PostgreSQL</span>
-                            <span class="project-tag">DigitalOcean</span>
+                <!-- Project 2: Shukran Trip -->
+                <div class="project-card group" data-aos="fade-up" data-aos-delay="100">
+                    <div class="project-image-wrapper">
+                        <img src="images/shukrantrip.png" alt="Shukran Trip" class="project-image">
+                        <div class="project-overlay">
+                            <a href="https://shukrantrip.com/" target="_blank" class="project-link">
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
                         </div>
-                        <a href="https://shukrantrip.com/" target="_blank" class="btn text-center">
-                            View Project
+                    </div>
+                    <div class="project-content">
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="text-xl font-bold text-white">Shukran Trip</h3>
+                            <span class="text-xs px-2 py-1 rounded-full bg-secondary/20 text-secondary">Travel</span>
+                        </div>
+                        <p class="text-white/60 text-sm mb-4 line-clamp-3">
+                            Comprehensive air ticket booking system with agent support. Includes visa processing and hotel booking capabilities.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="tech-badge">Laravel</span>
+                            <span class="tech-badge">React</span>
+                            <span class="tech-badge">PostgreSQL</span>
+                            <span class="tech-badge">DigitalOcean</span>
+                        </div>
+                        <a href="https://shukrantrip.com/" target="_blank" class="project-btn">
+                            Visit Site <i class="fas fa-arrow-right ml-2 text-xs"></i>
                         </a>
                     </div>
                 </div>
 
-                <div class="project-card">
-                    <div class="project-image" style="background-image: url('images/texttorrent.png');"></div>
-                    <div class="project-info">
-                        <h3>Text Torrent</h3>
-                        <p>Peer to Peer Texting, Toll-Free Number Registration, Blacklist Words, Number Validator, Batch Processing, Built-in CTIA Compliance, Bulk SMS, Bulk SMS Scheduling, 2-Way SMS Chat</p>
-                        <div class="project-tags">
-                            <span class="project-tag">Golang</span>
-                            <span class="project-tag">MySQL</span>
-                            <span class="project-tag">Docker</span>
-                            <span class="project-tag">AWS</span>
+                <!-- Project 3: Text Torrent -->
+                <div class="project-card group" data-aos="fade-up" data-aos-delay="200">
+                    <div class="project-image-wrapper">
+                        <img src="images/texttorrent.png" alt="Text Torrent" class="project-image">
+                        <div class="project-overlay">
+                            <a href="https://texttorrent.com/" target="_blank" class="project-link">
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
                         </div>
-                        <a href="https://texttorrent.com/" target="_blank" class="btn text-center">
-                            View Project
+                    </div>
+                    <div class="project-content">
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="text-xl font-bold text-white">Text Torrent</h3>
+                            <span class="text-xs px-2 py-1 rounded-full bg-accent/20 text-accent">SaaS</span>
+                        </div>
+                        <p class="text-white/60 text-sm mb-4 line-clamp-3">
+                            P2P texting platform with toll-free registration, blacklist management, CTIA compliance, bulk SMS, and 2-way chat.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="tech-badge">Golang</span>
+                            <span class="tech-badge">MySQL</span>
+                            <span class="tech-badge">Docker</span>
+                            <span class="tech-badge">AWS</span>
+                        </div>
+                        <a href="https://texttorrent.com/" target="_blank" class="project-btn">
+                            Visit Site <i class="fas fa-arrow-right ml-2 text-xs"></i>
                         </a>
                     </div>
                 </div>
 
-                <div class="project-card">
-                    <div class="project-image" style="background-image: url('images/parkerbrand.png');"></div>
-                    <div class="project-info">
-                        <h3>Parkerbrand</h3>
-                        <p>Online ecommerce store for quality machines and equipment across the U.K.</p>
-                        <div class="project-tags">
-                            <span class="project-tag">React</span>
-                            <span class="project-tag">JavaScript</span>
-                            <span class="project-tag">Tailwind CSS</span>
-                            <span class="project-tag">Laravel</span>
+                <!-- Project 4: Parkerbrand -->
+                <div class="project-card group" data-aos="fade-up" data-aos-delay="0">
+                    <div class="project-image-wrapper">
+                        <img src="images/parkerbrand.png" alt="Parkerbrand" class="project-image">
+                        <div class="project-overlay">
+                            <a href="https://www.parkerbrand.co.uk/" target="_blank" class="project-link">
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
                         </div>
-                        <a href="https://www.parkerbrand.co.uk/" target="_blank" class="btn text-center">
-                            View Project
+                    </div>
+                    <div class="project-content">
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="text-xl font-bold text-white">Parkerbrand</h3>
+                            <span class="text-xs px-2 py-1 rounded-full bg-blue-500/20 text-blue-400">E-Commerce</span>
+                        </div>
+                        <p class="text-white/60 text-sm mb-4 line-clamp-3">
+                            Online e-commerce platform for quality machines and equipment distribution across the U.K.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="tech-badge">React</span>
+                            <span class="tech-badge">Tailwind</span>
+                            <span class="tech-badge">Laravel</span>
+                        </div>
+                        <a href="https://www.parkerbrand.co.uk/" target="_blank" class="project-btn">
+                            Visit Site <i class="fas fa-arrow-right ml-2 text-xs"></i>
                         </a>
                     </div>
                 </div>
 
-                <div class="project-card">
-                    <div class="project-image" style="background-image: url('images/mayfairfurniture.png');"></div>
-                    <div class="project-info">
-                        <h3>Mayfairfurniture</h3>
-                        <p>Online ecommerce store for supply contract grade commercial furniture to the hospitality & leisure industries. With over forty years of experience in the hospitality industry</p>
-                        <div class="project-tags">
-                            <span class="project-tag">Digital Ocean</span>
-                            <span class="project-tag">JavaScript</span>
-                            <span class="project-tag">Bootstrap CSS</span>
-                            <span class="project-tag">Laravel</span>
+                <!-- Project 5: Mayfair Furniture -->
+                <div class="project-card group" data-aos="fade-up" data-aos-delay="100">
+                    <div class="project-image-wrapper">
+                        <img src="images/mayfairfurniture.png" alt="Mayfair Furniture" class="project-image">
+                        <div class="project-overlay">
+                            <a href="https://www.mayfairfurniture.co.uk/" target="_blank" class="project-link">
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
                         </div>
-                        <a href="https://www.mayfairfurniture.co.uk/" target="_blank" class="btn text-center">
-                            View Project
+                    </div>
+                    <div class="project-content">
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="text-xl font-bold text-white">Mayfair Furniture</h3>
+                            <span class="text-xs px-2 py-1 rounded-full bg-green-500/20 text-green-400">E-Commerce</span>
+                        </div>
+                        <p class="text-white/60 text-sm mb-4 line-clamp-3">
+                            Commercial furniture supplier for hospitality & leisure industries with 40+ years of experience.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="tech-badge">Laravel</span>
+                            <span class="tech-badge">JavaScript</span>
+                            <span class="tech-badge">Bootstrap</span>
+                        </div>
+                        <a href="https://www.mayfairfurniture.co.uk/" target="_blank" class="project-btn">
+                            Visit Site <i class="fas fa-arrow-right ml-2 text-xs"></i>
                         </a>
                     </div>
                 </div>
 
-                <div class="project-card">
-                    <div class="project-image" style="background-image: url('images/bookpointbd.png');"></div>
-                    <div class="project-info">
-                        <h3>Bookpoint BD</h3>
-                        <p>Bookpoint BD is an online store for books where you can purchase or gift books you like within Bangladesh.</p>
-                        <div class="project-tags">
-                            <span class="project-tag">Digital Ocean</span>
-                            <span class="project-tag">JavaScript</span>
-                            <span class="project-tag">Bootstrap CSS</span>
-                            <span class="project-tag">Laravel</span>
+                <!-- Project 6: Bookpoint BD -->
+                <div class="project-card group" data-aos="fade-up" data-aos-delay="200">
+                    <div class="project-image-wrapper">
+                        <img src="images/bookpointbd.png" alt="Bookpoint BD" class="project-image">
+                        <div class="project-overlay">
+                            <a href="https://bookpointbd.com/" target="_blank" class="project-link">
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
                         </div>
-                        <a href="https://bookpointbd.com/" target="_blank" class="btn text-center">
-                            View Project
+                    </div>
+                    <div class="project-content">
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="text-xl font-bold text-white">Bookpoint BD</h3>
+                            <span class="text-xs px-2 py-1 rounded-full bg-yellow-500/20 text-yellow-400">E-Commerce</span>
+                        </div>
+                        <p class="text-white/60 text-sm mb-4 line-clamp-3">
+                            Online bookstore for purchasing and gifting books within Bangladesh.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="tech-badge">Laravel</span>
+                            <span class="tech-badge">JavaScript</span>
+                            <span class="tech-badge">Bootstrap</span>
+                        </div>
+                        <a href="https://bookpointbd.com/" target="_blank" class="project-btn">
+                            Visit Site <i class="fas fa-arrow-right ml-2 text-xs"></i>
                         </a>
                     </div>
                 </div>
 
-                <div class="project-card">
-                    <div class="project-image" style="background-image: url('images/universitygateway.png');"></div>
-                    <div class="project-info">
-                        <h3>University Gateway</h3>
-                        <p>An online panel for Education consultants to process student foreign admission on Canada. Consultants from all over the world using this panel </p>
-                        <div class="project-tags">
-                            <span class="project-tag">Digital Ocean</span>
-                            <span class="project-tag">React</span>
-                            <span class="project-tag">Bootstrap CSS</span>
-                            <span class="project-tag">Laravel</span>
+                <!-- Project 7: University Gateway -->
+                <div class="project-card group" data-aos="fade-up" data-aos-delay="0">
+                    <div class="project-image-wrapper">
+                        <img src="images/universitygateway.png" alt="University Gateway" class="project-image">
+                        <div class="project-overlay">
+                            <a href="https://universitygateway.io/" target="_blank" class="project-link">
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
                         </div>
-                        <a href="https://universitygateway.io/" target="_blank" class="btn text-center">
-                            View Project
+                    </div>
+                    <div class="project-content">
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="text-xl font-bold text-white">University Gateway</h3>
+                            <span class="text-xs px-2 py-1 rounded-full bg-purple-500/20 text-purple-400">Education</span>
+                        </div>
+                        <p class="text-white/60 text-sm mb-4 line-clamp-3">
+                            Global platform for education consultants to process Canadian student admissions.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="tech-badge">Laravel</span>
+                            <span class="tech-badge">React</span>
+                            <span class="tech-badge">Bootstrap</span>
+                        </div>
+                        <a href="https://universitygateway.io/" target="_blank" class="project-btn">
+                            Visit Site <i class="fas fa-arrow-right ml-2 text-xs"></i>
                         </a>
                     </div>
                 </div>
 
-                <div class="project-card">
-                    <div class="project-image" style="background-image: url('images/crm.png');"></div>
-                    <div class="project-info">
-                        <h3>Edu CRM</h3>
-                        <p>A customer relationship management system for education consulting firms used globally.</p>
-                        <div class="project-tags">
-                            <span class="project-tag">Digital Ocean</span>
-                            <span class="project-tag">React</span>
-                            <span class="project-tag">Bootstrap CSS</span>
-                            <span class="project-tag">Laravel</span>
+                <!-- Project 8: Edu CRM -->
+                <div class="project-card group" data-aos="fade-up" data-aos-delay="100">
+                    <div class="project-image-wrapper">
+                        <img src="images/crm.png" alt="Edu CRM" class="project-image">
+                        <div class="project-overlay">
+                            <a href="https://sveducrm.com/" target="_blank" class="project-link">
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
                         </div>
-                        <a href="https://sveducrm.com/" target="_blank" class="btn text-center">
-                            View Project
+                    </div>
+                    <div class="project-content">
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="text-xl font-bold text-white">Edu CRM</h3>
+                            <span class="text-xs px-2 py-1 rounded-full bg-indigo-500/20 text-indigo-400">CRM</span>
+                        </div>
+                        <p class="text-white/60 text-sm mb-4 line-clamp-3">
+                            Customer relationship management system for education consulting firms used globally.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="tech-badge">Laravel</span>
+                            <span class="tech-badge">React</span>
+                            <span class="tech-badge">Bootstrap</span>
+                        </div>
+                        <a href="https://sveducrm.com/" target="_blank" class="project-btn">
+                            Visit Site <i class="fas fa-arrow-right ml-2 text-xs"></i>
                         </a>
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="section contact">
+    <section id="contact" class="section relative py-20 md:py-32 bg-gradient-to-b from-dark/50 to-darker">
         <div class="container">
-            <h2 class="section-title">Get In Touch</h2>
-            <div class="contact-container">
-                <div class="contact-info">
-                    <h3>Let's Talk</h3>
-                    <p>Whether you have a project in mind, a question about my work, or just want to say hello, I'd love to hear from you!</p>
-                    <p>Feel free to reach out through the contact form or via the following channels:</p>
-                    <div class="contact-links">
-                        <a href="mailto:tushar.khan0122@gmail.com" class="flex items-center">
-                            <i class="fas fa-envelope mr-2"></i> Email
-                        </a>
-                        <a href="https://www.linkedin.com/in/tushar-khan-18a325b9/" target="_blank" class="flex items-center">
-                            <i class="fab fa-linkedin mr-2"></i> LinkedIn
-                        </a>
-                        <a href="https://github.com/tusharkhan" target="_blank" class="flex items-center">
-                            <i class="fab fa-github mr-2"></i> GitHub
-                        </a>
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="section-title">
+                    <span class="text-white/30 font-display text-sm font-semibold tracking-wider uppercase">Get In Touch</span>
+                    <span class="block text-4xl md:text-5xl font-display font-bold mt-2">
+                        Let's Build Something <span class="gradient-text">Amazing</span>
+                    </span>
+                </h2>
+                <p class="text-white/60 mt-4 max-w-2xl mx-auto">
+                    Have a project in mind? Let's discuss how we can work together
+                </p>
+            </div>
+            
+            <div class="grid lg:grid-cols-5 gap-12 max-w-6xl mx-auto">
+                <!-- Contact Info -->
+                <div class="lg:col-span-2 space-y-8" data-aos="fade-right">
+                    <div class="glass-card rounded-2xl p-8">
+                        <h3 class="text-2xl font-bold mb-6 text-white">Let's Connect</h3>
+                        <p class="text-white/70 mb-8 leading-relaxed">
+                            Whether you have a project in mind, a question about my work, or just want to say hello, 
+                            I'd love to hear from you!
+                        </p>
+                        
+                        <div class="space-y-4">
+                            <a href="mailto:tushar.khan0122@gmail.com" class="contact-method group">
+                                <div class="icon-wrapper">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <div class="text-sm text-white/50">Email</div>
+                                    <div class="text-white group-hover:text-primary transition-colors">tushar.khan0122@gmail.com</div>
+                                </div>
+                            </a>
+                            
+                            <a href="https://www.linkedin.com/in/tushar-khan-18a325b9/" target="_blank" class="contact-method group">
+                                <div class="icon-wrapper">
+                                    <i class="fab fa-linkedin"></i>
+                                </div>
+                                <div>
+                                    <div class="text-sm text-white/50">LinkedIn</div>
+                                    <div class="text-white group-hover:text-primary transition-colors">Connect with me</div>
+                                </div>
+                            </a>
+                            
+                            <a href="https://github.com/tusharkhan" target="_blank" class="contact-method group">
+                                <div class="icon-wrapper">
+                                    <i class="fab fa-github"></i>
+                                </div>
+                                <div>
+                                    <div class="text-sm text-white/50">GitHub</div>
+                                    <div class="text-white group-hover:text-primary transition-colors">@tusharkhan</div>
+                                </div>
+                            </a>
+                        </div>
                     </div>
                 </div>
-                <div class="contact-form">
-                    <form id="contactForm" method="POST" action="https://formspree.io/f/xdkgvegr" enctype="multipart/form-data" novalidate>
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" id="name" name="name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="subject">Subject</label>
-                            <input type="text" id="subject" name="subject" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea id="message" name="message" required></textarea>
-                        </div>
-                        <input type="hidden" name="_subject" value="Portfolio website">
-                        <input type="text" name="_gotcha" style="display:none">
-                        <button type="submit" class="btn w-full flex justify-center items-center">
-                            <i class="fas fa-paper-plane mr-2"></i> Send Message
-                        </button>
-                    </form>
-                    <p id="my-form-status"></p>
+                
+                <!-- Contact Form -->
+                <div class="lg:col-span-3" data-aos="fade-left">
+                    <div class="glass-card rounded-2xl p-8">
+                        <form id="contactForm" method="POST" action="https://formspree.io/f/xdkgvegr" enctype="multipart/form-data" novalidate class="space-y-6">
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <div class="form-group">
+                                    <label for="name" class="block text-sm font-medium text-white/80 mb-2">Your Name</label>
+                                    <input type="text" id="name" name="name" required 
+                                           class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/30 focus:outline-none focus:border-primary transition-colors">
+                                </div>
+                                <div class="form-group">
+                                    <label for="email" class="block text-sm font-medium text-white/80 mb-2">Your Email</label>
+                                    <input type="email" id="email" name="email" required 
+                                           class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/30 focus:outline-none focus:border-primary transition-colors">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="subject" class="block text-sm font-medium text-white/80 mb-2">Subject</label>
+                                <input type="text" id="subject" name="subject" required 
+                                       class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/30 focus:outline-none focus:border-primary transition-colors">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="message" class="block text-sm font-medium text-white/80 mb-2">Message</label>
+                                <textarea id="message" name="message" required rows="6"
+                                          class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/30 focus:outline-none focus:border-primary transition-colors resize-none"></textarea>
+                            </div>
+                            
+                            <input type="hidden" name="_subject" value="Portfolio website">
+                            <input type="text" name="_gotcha" style="display:none">
+                            
+                            <button type="submit" class="btn-primary w-full py-4 rounded-lg font-semibold inline-flex items-center justify-center group">
+                                <i class="fas fa-paper-plane mr-2"></i>
+                                Send Message
+                                <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                            </button>
+                            
+                            <p id="my-form-status" class="text-center text-sm"></p>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-dark text-white py-12 text-center">
+    <footer class="relative py-12 border-t border-white/5">
         <div class="container">
-            <div class="footer-content">
-                <h3 class="text-2xl font-bold mb-6">Tushar Khan</h3>
-                <div class="social-links flex justify-center space-x-6 mb-8">
-                    <a href="https://www.linkedin.com/in/tushar-khan-18a325b9/" target="_blank" class="text-2xl hover:text-secondary transition-colors">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="text-center md:text-left">
+                    <h3 class="font-display text-2xl font-bold bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent mb-2">
+                        Tushar Khan
+                    </h3>
+                    <p class="text-white/50 text-sm">Full Stack Developer</p>
+                </div>
+                
+                <div class="flex items-center space-x-6">
+                    <a href="https://www.linkedin.com/in/tushar-khan-18a325b9/" target="_blank" 
+                       class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white/60 hover:bg-primary hover:text-white transition-all">
                         <i class="fab fa-linkedin"></i>
                     </a>
-                    <a href="https://github.com/tusharkhan" target="_blank" class="text-2xl hover:text-secondary transition-colors">
+                    <a href="https://github.com/tusharkhan" target="_blank" 
+                       class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white/60 hover:bg-primary hover:text-white transition-all">
                         <i class="fab fa-github"></i>
                     </a>
-                    <a href="https://www.instagram.com/tushar.khan/" target="_blank" class="text-2xl hover:text-secondary transition-colors">
+                    <a href="https://www.instagram.com/tushar.khan/" target="_blank" 
+                       class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white/60 hover:bg-primary hover:text-white transition-all">
                         <i class="fab fa-instagram"></i>
                     </a>
                 </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2023 Tushar Khan. All Rights Reserved.</p>
+                
+                <div class="text-center md:text-right">
+                    <p class="text-white/40 text-sm">&copy; 2024 Tushar Khan</p>
+                    <p class="text-white/30 text-xs mt-1">All Rights Reserved</p>
+                </div>
             </div>
         </div>
     </footer>
 
     <!-- JavaScript -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            easing: 'ease-out-cubic',
+            once: true,
+            offset: 50
+        });
+    </script>
     <script src="js/main.js"></script>
     <script src="js/github.js"></script>
 </body>
