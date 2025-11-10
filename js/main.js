@@ -1,26 +1,64 @@
-// Mobile Navigation Toggle
+// Modern Portfolio JavaScript
+
 document.addEventListener('DOMContentLoaded', function() {
     // Update copyright year
     const currentYear = new Date().getFullYear();
-    document.querySelector('.footer-bottom p').innerHTML = `&copy; ${currentYear} Tushar Khan. All Rights Reserved.`;
+    const footerYear = document.querySelector('footer p');
+    if (footerYear && footerYear.textContent.includes('2024')) {
+        footerYear.textContent = footerYear.textContent.replace('2024', currentYear);
+    }
+
+    // Mobile Navigation Toggle
+    const hamburger = document.querySelector('.hamburger');
+    const mobileMenu = document.querySelector('.mobile-menu');
+    const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+
+    if (hamburger && mobileMenu) {
+        hamburger.addEventListener('click', function() {
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+        });
+
+        // Close mobile menu when clicking on a link
+        mobileNavLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                hamburger.classList.remove('active');
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+    }
+
+    // Smooth scrolling for all navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            
+            if (targetId === '#') return;
+            
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                const headerOffset = 80;
+                const elementPosition = targetElement.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
 
     // GitHub Contribution Graph Year Filter
     const contributionYearSelect = document.getElementById('contributionYear');
     const githubContributionGraph = document.getElementById('githubContributionGraph');
 
     if (contributionYearSelect && githubContributionGraph) {
-        // Add loading spinner and overlay to the contribution graph container
-        const loadingSpinner = document.createElement('div');
-        loadingSpinner.className = 'loading-spinner';
-
-        const loadingOverlay = document.createElement('div');
-        loadingOverlay.className = 'loading-overlay';
-
-        githubContributionGraph.appendChild(loadingOverlay);
-        githubContributionGraph.appendChild(loadingSpinner);
-
-        // Populate the year dropdown with the last 5 years
-        const startYear = 2017; // You can adjust this as needed
+        // Populate the year dropdown with the last 8 years
+        const startYear = 2017;
         for (let year = currentYear; year >= startYear; year--) {
             const option = document.createElement('option');
             option.value = year;
@@ -28,92 +66,36 @@ document.addEventListener('DOMContentLoaded', function() {
             contributionYearSelect.appendChild(option);
         }
 
-        // Function to show loading state
-        function showLoading() {
-            loadingSpinner.style.display = 'block';
-            loadingOverlay.style.display = 'block';
-        }
-
-        // Function to hide loading state
-        function hideLoading() {
-            loadingSpinner.style.display = 'none';
-            loadingOverlay.style.display = 'none';
-        }
-
-        // Function to update the contribution graph based on selected year
+        // Function to update the contribution graph
         function updateContributionGraph(year) {
-            // Show loading state
-            showLoading();
-
-            const username = 'tusharkhan'; // GitHub username
-            const color = '1a1a1a'; // Color for the graph (matte black)
-
+            const username = 'tusharkhan';
+            const color = '6366F1'; // Primary color
+            
+            // Add loading state
+            githubContributionGraph.style.opacity = '0.5';
+            
             // Create a new image element
             const img = new Image();
-
-            // Set up load event handler
+            
             img.onload = function() {
-                // Clear the container
                 githubContributionGraph.innerHTML = '';
-
-                // Add year indicator and disclaimer
-                const yearIndicator = document.createElement('div');
-                yearIndicator.className = 'text-center text-sm text-gray-500 mb-2';
-                yearIndicator.textContent = `Showing contributions for ${year}`;
-                githubContributionGraph.appendChild(yearIndicator);
-
-                // Add disclaimer about year filter limitation
-                const disclaimer = document.createElement('div');
-                disclaimer.className = 'text-center text-xs text-gray-400 mb-4';
-                disclaimer.textContent = `Note: The graph shows your current GitHub contributions pattern.`;
-                githubContributionGraph.appendChild(disclaimer);
-
-                // Add the loaded image
+                img.className = 'w-full rounded-lg opacity-80';
+                img.alt = `${username}'s GitHub Contributions`;
                 githubContributionGraph.appendChild(img);
-
-                // Add link to GitHub profile
-                const profileLink = document.createElement('div');
-                profileLink.className = 'text-center mt-4';
-                profileLink.innerHTML = `
-                    <a href="https://github.com/${username}" target="_blank" class="text-blue-600 hover:underline text-sm">
-                        View full profile on GitHub <i class="fas fa-external-link-alt ml-1"></i>
-                    </a>
-                `;
-                githubContributionGraph.appendChild(profileLink);
-
-                // Re-append the loading elements
-                githubContributionGraph.appendChild(loadingOverlay);
-                githubContributionGraph.appendChild(loadingSpinner);
-
-                // Hide loading state
-                hideLoading();
+                githubContributionGraph.style.opacity = '1';
             };
 
-            // Set up error event handler
             img.onerror = function() {
-                // Show error message
                 githubContributionGraph.innerHTML = `
-                    <div class="text-center text-sm text-gray-500 mb-2">Showing contributions for ${year}</div>
-                    <div class="text-center p-4 bg-red-100 text-red-700 rounded-md">
+                    <div class="text-center p-4 bg-red-500/10 text-red-400 rounded-lg text-sm">
                         Failed to load contributions. Please try again later.
                     </div>
                 `;
-
-                // Re-append the loading elements
-                githubContributionGraph.appendChild(loadingOverlay);
-                githubContributionGraph.appendChild(loadingSpinner);
-
-                // Hide loading state
-                hideLoading();
+                githubContributionGraph.style.opacity = '1';
             };
 
-            // Set image attributes
-            // Note: ghchart.rshah.org doesn't actually support year filtering
-            // It always shows the current year's contributions
-            // The timestamp parameter is just to prevent caching
+            // Add timestamp to prevent caching
             img.src = `https://ghchart.rshah.org/${color}/${username}?t=${new Date().getTime()}`;
-            img.alt = `${username}'s GitHub Contributions`;
-            img.className = 'w-full rounded-md shadow-sm';
         }
 
         // Set initial graph to current year
@@ -125,127 +107,111 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    const hamburger = document.querySelector('.hamburger');
-    const navLinks = document.querySelector('.nav-links');
-
-    hamburger.addEventListener('click', function() {
-        navLinks.classList.toggle('active');
-        hamburger.classList.toggle('active');
-    });
-
-    // Close mobile menu when clicking on a nav link
-    document.querySelectorAll('.nav-links a').forEach(link => {
-        link.addEventListener('click', function() {
-            navLinks.classList.remove('active');
-            hamburger.classList.remove('active');
-        });
-    });
-
-    // Smooth scrolling for navigation links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            e.preventDefault();
-
-            const targetId = this.getAttribute('href');
-            const targetElement = document.querySelector(targetId);
-
-            if (targetElement) {
-                window.scrollTo({
-                    top: targetElement.offsetTop - 80,
-                    behavior: 'smooth'
-                });
-            }
-        });
-    });
-
     // Form submission handling with Formspree
     const contactForm = document.getElementById('contactForm');
     if (contactForm) {
-        contactForm.addEventListener("submit", handleSubmit)
+        contactForm.addEventListener("submit", handleSubmit);
     }
 
     async function handleSubmit(event) {
         event.preventDefault();
-        let name = this.querySelector('input[name="name"]').value;
-        let email = this.querySelector('input[name="email"]').value;
-        let message = this.querySelector('textarea[name="message"]').value;
-        let subject = this.querySelector('input[name="subject"]').value;
-        let _subject = this.querySelector('input[name="_subject"]').value;
-        let subjectText = _subject + ' : ' + subject;
+        
+        const name = this.querySelector('input[name="name"]').value;
+        const email = this.querySelector('input[name="email"]').value;
+        const message = this.querySelector('textarea[name="message"]').value;
+        const subject = this.querySelector('input[name="subject"]').value;
+        const _subject = this.querySelector('input[name="_subject"]').value;
+        const subjectText = _subject + ' : ' + subject;
 
         const submitBtn = this.querySelector('button[type="submit"]');
         const originalText = submitBtn.innerHTML;
-        submitBtn.innerHTML = 'Sending...';
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Sending...';
         submitBtn.disabled = true;
 
-        var status = document.getElementById("my-form-status");
-        var data = new FormData(event.target);
-        fetch(event.target.action, {
-            method: contactForm.method,
-            body: JSON.stringify({
-                name : name,
-                email : email,
-                message : message,
-                subject : subjectText
-            }),
-            headers: {
-                'Accept': 'application/json'
-            }
-        }).then(async response => {
+        const status = document.getElementById("my-form-status");
+        
+        try {
+            const response = await fetch(event.target.action, {
+                method: contactForm.method,
+                body: JSON.stringify({
+                    name: name,
+                    email: email,
+                    message: message,
+                    subject: subjectText
+                }),
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            });
+
             if (response.ok) {
-                status.innerHTML = "Thanks for your submission!";
+                status.innerHTML = '<div class="text-green-400">✓ Thanks for your message! I\'ll get back to you soon.</div>';
                 contactForm.reset();
-                submitBtn.innerHTML = originalText;
             } else {
-                try {
-                    const data = await response.json();
-                    if (Object.hasOwn(data, 'errors')) {
-                        status.innerHTML = data["errors"].map(error => error["message"]).join(", ");
-                    } else {
-                        status.innerHTML = "Oops! There was a problem submitting your form";
-                    }
-                } catch (e) {
-                    status.innerHTML = "Oops! There was a problem submitting your form";
+                const data = await response.json();
+                if (Object.hasOwn(data, 'errors')) {
+                    status.innerHTML = `<div class="text-red-400">✗ ${data["errors"].map(error => error["message"]).join(", ")}</div>`;
+                } else {
+                    status.innerHTML = '<div class="text-red-400">✗ Oops! There was a problem submitting your form.</div>';
                 }
             }
-        }).catch(error => {
-            status.innerHTML = "Oops! There was a problem submitting your form";
-        });
+        } catch (error) {
+            status.innerHTML = '<div class="text-red-400">✗ Oops! There was a problem submitting your form.</div>';
+        } finally {
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+        }
     }
 
-    // Add animation to skill cards on scroll
-    const skillCards = document.querySelectorAll('.skill-card');
-    const projectCards = document.querySelectorAll('.project-card');
-
-    // Simple function to check if element is in viewport
-    function isInViewport(element) {
-        const rect = element.getBoundingClientRect();
-        return (
-            rect.top >= 0 &&
-            rect.left >= 0 &&
-            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-            rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-        );
-    }
-
-    // Function to add animation class when element is in viewport
-    function animateOnScroll() {
-        skillCards.forEach(card => {
-            if (isInViewport(card)) {
-                card.classList.add('animate');
-            }
-        });
-
-        projectCards.forEach(card => {
-            if (isInViewport(card)) {
-                card.classList.add('animate');
+    // Add scroll-based header shadow
+    const header = document.querySelector('header');
+    if (header) {
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 100) {
+                header.style.boxShadow = '0 4px 30px rgba(0, 0, 0, 0.3)';
+            } else {
+                header.style.boxShadow = 'none';
             }
         });
     }
 
-    // Initial check on page load
-    animateOnScroll();
+    // Parallax effect for background elements
+    const floatingElements = document.querySelectorAll('.animate-float');
+    if (floatingElements.length > 0) {
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            floatingElements.forEach((el, index) => {
+                const speed = 0.1 + (index * 0.05);
+                el.style.transform = `translateY(${scrolled * speed}px)`;
+            });
+        });
+    }
 
-    // Check on scroll
-    window.addEventListener('scroll', animateOnScroll);
+    // Add active state to navigation based on scroll position
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    function setActiveNav() {
+        const scrollY = window.pageYOffset;
+
+        sections.forEach(section => {
+            const sectionHeight = section.offsetHeight;
+            const sectionTop = section.offsetTop - 100;
+            const sectionId = section.getAttribute('id');
+            
+            if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+                navLinks.forEach(link => {
+                    if (link.getAttribute('href') === `#${sectionId}`) {
+                        link.style.color = 'var(--primary)';
+                    } else {
+                        link.style.color = '';
+                    }
+                });
+            }
+        });
+    }
+
+    window.addEventListener('scroll', setActiveNav);
+    setActiveNav(); // Call once on load
 });
