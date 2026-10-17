@@ -51,42 +51,127 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // GitHub Contribution Graph (ghchart only serves the last 12 months)
+    // GitHub Contribution Graph (data: github-contributions-api.jogruber.de)
+    const contributionYearSelect = document.getElementById('contributionYear');
     const githubContributionGraph = document.getElementById('githubContributionGraph');
+    const contributionSummary = document.getElementById('contributionSummary');
 
-    if (githubContributionGraph) {
-        function loadContributionGraph() {
-            const username = 'tusharkhan';
-            const color = '6366F1'; // Primary color
-            
-            // Add loading state
-            githubContributionGraph.style.opacity = '0.5';
-            
-            // Create a new image element
-            const img = new Image();
-            
-            img.onload = function() {
-                githubContributionGraph.innerHTML = '';
-                img.className = 'w-full rounded-lg opacity-80';
-                img.alt = `${username}'s GitHub Contributions`;
-                githubContributionGraph.appendChild(img);
-                githubContributionGraph.style.opacity = '1';
-            };
+    if (contributionYearSelect && githubContributionGraph) {
+        const username = 'tusharkhan';
+        const levelColors = [
+            'rgba(255, 255, 255, 0.06)',
+            'rgba(99, 102, 241, 0.35)',
+            'rgba(99, 102, 241, 0.55)',
+            'rgba(99, 102, 241, 0.8)',
+            '#6366F1'
+        ];
+        let contributions = [];
 
-            img.onerror = function() {
+        // Local YYYY-MM-DD (toISOString would shift the date in non-UTC timezones)
+        function toDateString(date) {
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${date.getFullYear()}-${month}-${day}`;
+        }
+
+        function renderContributionGraph(period) {
+            const today = new Date();
+            const todayString = toDateString(today);
+            let days;
+
+            if (period === 'last') {
+                const start = new Date(today);
+                start.setFullYear(start.getFullYear() - 1);
+                const startString = toDateString(start);
+                days = contributions.filter(day => day.date > startString && day.date <= todayString);
+            } else {
+                days = contributions.filter(day => day.date.startsWith(period) && day.date <= todayString);
+            }
+
+            githubContributionGraph.innerHTML = '';
+            if (days.length === 0) return;
+
+            // Pad the first week so each row is a weekday (Sun-Sat), like GitHub
+            const firstWeekday = new Date(`${days[0].date}T00:00:00`).getDay();
+            const columns = `repeat(${Math.ceil((firstWeekday + days.length) / 7)}, minmax(7px, 1fr))`;
+
+            const months = document.createElement('div');
+            months.className = 'contribution-months';
+            months.style.gridTemplateColumns = columns;
+
+            const grid = document.createElement('div');
+            grid.className = 'contribution-grid';
+            grid.style.gridTemplateColumns = columns;
+            grid.setAttribute('role', 'img');
+
+            for (let i = 0; i < firstWeekday; i++) {
+                grid.appendChild(document.createElement('span'));
+            }
+
+            let total = 0;
+            days.forEach((day, index) => {
+                total += day.count;
+
+                const cell = document.createElement('span');
+                cell.style.background = levelColors[day.level];
+                cell.title = `${day.count} contribution${day.count === 1 ? '' : 's'} on ${day.date}`;
+                grid.appendChild(cell);
+
+                if (day.date.endsWith('-01')) {
+                    const label = document.createElement('span');
+                    label.textContent = new Date(`${day.date}T00:00:00`).toLocaleString('en', { month: 'short' });
+                    label.style.gridColumnStart = Math.floor((firstWeekday + index) / 7) + 1;
+                    months.appendChild(label);
+                }
+            });
+
+            const periodText = period === 'last' ? 'in the last 12 months' : `in ${period}`;
+            const summaryText = `${total.toLocaleString()} contributions ${periodText}`;
+            grid.setAttribute('aria-label', summaryText);
+
+            githubContributionGraph.append(months, grid);
+            // On narrow screens, start scrolled to the most recent weeks
+            githubContributionGraph.scrollLeft = githubContributionGraph.scrollWidth;
+            if (contributionSummary) {
+                contributionSummary.textContent = summaryText;
+            }
+        }
+
+        githubContributionGraph.style.opacity = '0.5';
+
+        fetch(`https://github-contributions-api.jogruber.de/v4/${username}?y=all`)
+            .then(response => {
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                return response.json();
+            })
+            .then(data => {
+                // The API lists years newest first; sort days oldest first
+                contributions = data.contributions.sort((a, b) => a.date.localeCompare(b.date));
+
+                Object.keys(data.total)
+                    .sort((a, b) => b - a)
+                    .forEach(year => {
+                        const option = document.createElement('option');
+                        option.value = year;
+                        option.textContent = year;
+                        contributionYearSelect.appendChild(option);
+                    });
+
+                renderContributionGraph(contributionYearSelect.value);
+                contributionYearSelect.addEventListener('change', function() {
+                    renderContributionGraph(this.value);
+                });
+            })
+            .catch(() => {
                 githubContributionGraph.innerHTML = `
                     <div class="text-center p-4 bg-red-500/10 text-red-400 rounded-lg text-sm">
                         Failed to load contributions. Please try again later.
                     </div>
                 `;
+            })
+            .finally(() => {
                 githubContributionGraph.style.opacity = '1';
-            };
-
-            // Add timestamp to prevent caching
-            img.src = `https://ghchart.rshah.org/${color}/${username}?t=${new Date().getTime()}`;
-        }
-
-        loadContributionGraph();
+            });
     }
 
     // Form submission handling with Formspree
