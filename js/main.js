@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Parallax effect for background elements
-    const floatingElements = document.querySelectorAll('.animate-float');
+    const floatingElements = document.querySelectorAll('[data-parallax]');
     if (floatingElements.length > 0) {
         window.addEventListener('scroll', function() {
             const scrolled = window.pageYOffset;
