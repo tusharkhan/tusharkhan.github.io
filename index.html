@@ -67,9 +67,9 @@
 <body class="font-sans bg-darker text-white antialiased overflow-x-hidden">
     <!-- Animated Background -->
     <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
-        <div class="absolute top-0 -left-4 w-96 h-96 bg-primary opacity-10 rounded-full mix-blend-multiply filter blur-3xl animate-float"></div>
-        <div class="absolute top-0 -right-4 w-96 h-96 bg-secondary opacity-10 rounded-full mix-blend-multiply filter blur-3xl animate-float" style="animation-delay: 2s;"></div>
-        <div class="absolute -bottom-8 left-20 w-96 h-96 bg-accent opacity-10 rounded-full mix-blend-multiply filter blur-3xl animate-float" style="animation-delay: 4s;"></div>
+        <div class="absolute top-0 -left-4 w-96 h-96 bg-primary opacity-10 rounded-full mix-blend-multiply filter blur-3xl animate-float" data-parallax></div>
+        <div class="absolute top-0 -right-4 w-96 h-96 bg-secondary opacity-10 rounded-full mix-blend-multiply filter blur-3xl animate-float" data-parallax style="animation-delay: 2s;"></div>
+        <div class="absolute -bottom-8 left-20 w-96 h-96 bg-accent opacity-10 rounded-full mix-blend-multiply filter blur-3xl animate-float" data-parallax style="animation-delay: 4s;"></div>
     </div>
 
     <!-- Header -->
@@ -235,13 +235,9 @@
                     <div class="mt-8 glass-card rounded-xl p-6" data-aos="fade-up" data-aos-delay="100">
                         <div class="flex justify-between items-center mb-4">
                             <h4 class="text-lg font-semibold text-white">GitHub Activity</h4>
-                            <select id="contributionYear" class="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary transition-colors">
-                                <!-- Years will be populated by JavaScript -->
-                            </select>
+                            <span class="text-sm text-white/50">Last 12 months</span>
                         </div>
-                        <div id="githubContributionGraph" class="relative">
-                            <img src="https://ghchart.rshah.org/6366F1/tusharkhan" alt="Tushar Khan's GitHub Contributions" class="w-full rounded-lg opacity-80">
-                        </div>
+                        <div id="githubContributionGraph" class="relative"></div>
                     </div>
                     
                     <!-- Download Resume Button -->
@@ -777,7 +773,7 @@
                 </div>
                 
                 <div class="text-center md:text-right">
-                    <p class="text-white/40 text-sm">&copy; 2024 Tushar Khan</p>
+                    <p class="text-white/40 text-sm">&copy; <span id="currentYear">2024</span> Tushar Khan</p>
                     <p class="text-white/30 text-xs mt-1">All Rights Reserved</p>
                 </div>
             </div>
@@ -795,6 +791,5 @@
         });
     </script>
     <script src="js/main.js"></script>
-    <script src="js/github.js"></script>
 </body>
 </html>
