@@ -1,6 +1,6 @@
 # Tushar Khan - Portfolio Website
 
-This is a personal portfolio website for Tushar Khan, a software developer with expertise in PHP, Golang, MySQL, JavaScript, and frameworks like Laravel and React. The website is hosted on GitHub Pages and accessible at [tusharkhan.me](https://tusharkhan.me).
+This is a personal portfolio website for Tushar Khan, a software developer with expertise in PHP, Golang, MySQL, JavaScript, and frameworks like Laravel and React. The website is hosted on GitHub Pages and accessible at [tusharkhan.info](https://tusharkhan.info).
 
 ## Features
 
