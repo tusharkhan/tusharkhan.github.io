@@ -434,6 +434,41 @@ select option {
     padding: 0.5rem;
 }
 
+/* GitHub Contribution Graph */
+#githubContributionGraph {
+    /* Scroll inside the card on narrow screens instead of widening the page */
+    contain: inline-size;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+}
+
+.contribution-months,
+.contribution-grid {
+    display: grid;
+    gap: 2px;
+}
+
+.contribution-months {
+    height: 1rem;
+    margin-bottom: 4px;
+    font-size: 0.625rem;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.contribution-months span {
+    white-space: nowrap;
+}
+
+.contribution-grid {
+    grid-template-rows: repeat(7, auto);
+    grid-auto-flow: column;
+}
+
+.contribution-grid span {
+    aspect-ratio: 1;
+    border-radius: 2px;
+}
+
 /* Line Clamp Utility */
 .line-clamp-3 {
     display: -webkit-box;
