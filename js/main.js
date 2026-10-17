@@ -2,10 +2,9 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     // Update copyright year
-    const currentYear = new Date().getFullYear();
-    const footerYear = document.querySelector('footer p');
-    if (footerYear && footerYear.textContent.includes('2024')) {
-        footerYear.textContent = footerYear.textContent.replace('2024', currentYear);
+    const footerYear = document.getElementById('currentYear');
+    if (footerYear) {
+        footerYear.textContent = new Date().getFullYear();
     }
 
     // Mobile Navigation Toggle
@@ -52,22 +51,11 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // GitHub Contribution Graph Year Filter
-    const contributionYearSelect = document.getElementById('contributionYear');
+    // GitHub Contribution Graph (ghchart only serves the last 12 months)
     const githubContributionGraph = document.getElementById('githubContributionGraph');
 
-    if (contributionYearSelect && githubContributionGraph) {
-        // Populate the year dropdown with the last 8 years
-        const startYear = 2017;
-        for (let year = currentYear; year >= startYear; year--) {
-            const option = document.createElement('option');
-            option.value = year;
-            option.textContent = year;
-            contributionYearSelect.appendChild(option);
-        }
-
-        // Function to update the contribution graph
-        function updateContributionGraph(year) {
+    if (githubContributionGraph) {
+        function loadContributionGraph() {
             const username = 'tusharkhan';
             const color = '6366F1'; // Primary color
             
@@ -98,13 +86,7 @@ document.addEventListener('DOMContentLoaded', function() {
             img.src = `https://ghchart.rshah.org/${color}/${username}?t=${new Date().getTime()}`;
         }
 
-        // Set initial graph to current year
-        updateContributionGraph(currentYear);
-
-        // Handle year selection change
-        contributionYearSelect.addEventListener('change', function() {
-            updateContributionGraph(this.value);
-        });
+        loadContributionGraph();
     }
 
     // Form submission handling with Formspree
@@ -183,7 +165,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const scrolled = window.pageYOffset;
             floatingElements.forEach((el, index) => {
                 const speed = 0.1 + (index * 0.05);
-                el.style.transform = `translateY(${scrolled * speed}px)`;
+                // Use `translate` so the CSS float animation's `transform` keeps running
+                el.style.translate = `0 ${scrolled * speed}px`;
             });
         });
     }
