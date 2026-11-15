@@ -7,6 +7,24 @@ document.addEventListener('DOMContentLoaded', function() {
         footerYear.textContent = new Date().getFullYear();
     }
 
+    // Copy composer install commands
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+        btn.addEventListener('click', async function() {
+            const icon = btn.querySelector('i');
+            try {
+                await navigator.clipboard.writeText(btn.dataset.copy);
+                icon.className = 'fas fa-check';
+                btn.setAttribute('aria-label', 'Copied');
+            } catch (err) {
+                icon.className = 'fas fa-times';
+            }
+            setTimeout(() => {
+                icon.className = 'far fa-copy';
+                btn.setAttribute('aria-label', 'Copy install command');
+            }, 1500);
+        });
+    });
+
     // Mobile Navigation Toggle
     const hamburger = document.querySelector('.hamburger');
     const mobileMenu = document.querySelector('.mobile-menu');

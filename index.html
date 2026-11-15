@@ -11,9 +11,9 @@
     <!-- AOS Animation Library -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <!-- Custom CSS (bump ?v= on every CSS/JS change: the host caches these files for 7 days) -->
-    <link rel="stylesheet" href="css/styles.css?v=20261115">
+    <link rel="stylesheet" href="css/styles.css?v=20261116">
     <!-- Prebuilt Tailwind (see tailwind.config.js for how to rebuild). Loaded after styles.css to keep the same cascade the Play CDN had. -->
-    <link rel="stylesheet" href="css/tailwind.css?v=20261115">
+    <link rel="stylesheet" href="css/tailwind.css?v=20261116">
 </head>
 <body class="font-sans bg-darker text-white antialiased overflow-x-hidden">
     <!-- Animated Background -->
@@ -35,6 +35,7 @@
                     <li><a href="#about" class="nav-link relative text-sm font-medium text-white/80 hover:text-white transition-colors">About</a></li>
                     <li><a href="#skills" class="nav-link relative text-sm font-medium text-white/80 hover:text-white transition-colors">Skills</a></li>
                     <li><a href="#projects" class="nav-link relative text-sm font-medium text-white/80 hover:text-white transition-colors">Projects</a></li>
+                    <li><a href="#packages" class="nav-link relative text-sm font-medium text-white/80 hover:text-white transition-colors">Packages</a></li>
                     <li><a href="#contact" class="btn-primary px-6 py-2 rounded-full text-sm font-semibold">Let's Talk</a></li>
                 </ul>
                 <div class="hamburger md:hidden cursor-pointer">
@@ -53,6 +54,7 @@
             <a href="#about" class="mobile-nav-link text-3xl font-bold text-white/80 hover:text-white transition-colors">About</a>
             <a href="#skills" class="mobile-nav-link text-3xl font-bold text-white/80 hover:text-white transition-colors">Skills</a>
             <a href="#projects" class="mobile-nav-link text-3xl font-bold text-white/80 hover:text-white transition-colors">Projects</a>
+            <a href="#packages" class="mobile-nav-link text-3xl font-bold text-white/80 hover:text-white transition-colors">Packages</a>
             <a href="#contact" class="mobile-nav-link text-3xl font-bold text-white/80 hover:text-white transition-colors">Contact</a>
         </div>
     </div>
@@ -595,6 +597,159 @@
         </div>
     </section>
 
+    <!-- Open Source Packages Section -->
+    <section id="packages" class="section relative py-20 md:py-32">
+        <div class="container">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="section-title">
+                    <span class="text-white/30 font-display text-sm font-semibold tracking-wider uppercase">Open Source</span>
+                    <span class="block text-4xl md:text-5xl font-display font-bold mt-2">
+                        PHP <span class="gradient-text">Packages</span>
+                    </span>
+                </h2>
+                <p class="text-white/60 mt-4 max-w-2xl mx-auto">
+                    Libraries I've published on Packagist, ready to install with Composer
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Package: DB Error Explainer -->
+                <div class="package-card" data-aos="fade-up" data-aos-delay="0">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="package-icon"><i class="fas fa-database"></i></div>
+                        <span class="package-version">v1.0.2</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">DB Error Explainer</h3>
+                    <p class="text-white/60 text-sm mb-4">
+                        Explains database errors in plain language with a suggested SQL fix, for MySQL, MariaDB, PostgreSQL and SQLite. The Laravel package adds Ignition solutions, a facade and Artisan commands.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="tech-badge">PHP</span>
+                        <span class="tech-badge">Laravel</span>
+                        <span class="tech-badge">Debugging</span>
+                    </div>
+                    <div class="composer-cmd">
+                        <code>composer require tusharkhan/db-error-explainer-laravel</code>
+                        <button type="button" class="copy-btn" data-copy="composer require tusharkhan/db-error-explainer-laravel" aria-label="Copy install command"><i class="far fa-copy"></i></button>
+                    </div>
+                    <p class="text-white/40 text-xs mt-3">
+                        Also: <a href="https://packagist.org/packages/tusharkhan/db-error-explainer-core" target="_blank" rel="noopener" class="package-sublink">core</a> (any PHP app) ·
+                        <a href="https://packagist.org/packages/tusharkhan/db-error-explainer-lib" target="_blank" rel="noopener" class="package-sublink">lib</a> (shared error codes)
+                    </p>
+                    <div class="package-links">
+                        <a href="https://github.com/tusharkhan/db-error-explainer-laravel" target="_blank" rel="noopener" class="project-btn"><i class="fab fa-github mr-2"></i>GitHub</a>
+                        <a href="https://packagist.org/packages/tusharkhan/db-error-explainer-laravel" target="_blank" rel="noopener" class="project-btn"><i class="fas fa-box mr-2"></i>Packagist</a>
+                    </div>
+                </div>
+
+                <!-- Package: Semantic Sec -->
+                <div class="package-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="package-icon"><i class="fas fa-shield-alt"></i></div>
+                        <span class="package-version">v0.1.1</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Semantic Sec</h3>
+                    <p class="text-white/60 text-sm mb-4">
+                        LLM-assisted authorization and IDOR scanner for Laravel applications.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="tech-badge">Laravel</span>
+                        <span class="tech-badge">Security</span>
+                        <span class="tech-badge">LLM</span>
+                    </div>
+                    <div class="composer-cmd">
+                        <code>composer require tusharkhan/semantic-sec</code>
+                        <button type="button" class="copy-btn" data-copy="composer require tusharkhan/semantic-sec" aria-label="Copy install command"><i class="far fa-copy"></i></button>
+                    </div>
+                    <div class="package-links">
+                        <a href="https://github.com/tusharkhan/semantic-sec" target="_blank" rel="noopener" class="project-btn"><i class="fab fa-github mr-2"></i>GitHub</a>
+                        <a href="https://packagist.org/packages/tusharkhan/semantic-sec" target="_blank" rel="noopener" class="project-btn"><i class="fas fa-box mr-2"></i>Packagist</a>
+                    </div>
+                </div>
+
+                <!-- Package: Chatbot -->
+                <div class="package-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="package-icon"><i class="fas fa-robot"></i></div>
+                        <span class="package-version">v1.0.0</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Chatbot</h3>
+                    <p class="text-white/60 text-sm mb-4">
+                        PHP chatbot framework for Telegram, Slack and the web, with pattern matching, state management and middleware. Works with any PHP framework or standalone.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="tech-badge">PHP</span>
+                        <span class="tech-badge">Telegram</span>
+                        <span class="tech-badge">Slack</span>
+                    </div>
+                    <div class="composer-cmd">
+                        <code>composer require tusharkhan/chatbot</code>
+                        <button type="button" class="copy-btn" data-copy="composer require tusharkhan/chatbot" aria-label="Copy install command"><i class="far fa-copy"></i></button>
+                    </div>
+                    <div class="package-links">
+                        <a href="https://github.com/tusharkhan/chatbot" target="_blank" rel="noopener" class="project-btn"><i class="fab fa-github mr-2"></i>GitHub</a>
+                        <a href="https://packagist.org/packages/tusharkhan/chatbot" target="_blank" rel="noopener" class="project-btn"><i class="fas fa-box mr-2"></i>Packagist</a>
+                    </div>
+                </div>
+
+                <!-- Package: Bangla Faker -->
+                <div class="package-card" data-aos="fade-up" data-aos-delay="0">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="package-icon"><i class="fas fa-language"></i></div>
+                        <span class="package-version">v2.2.1</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Bangla Faker</h3>
+                    <p class="text-white/60 text-sm mb-4">
+                        A Faker library for Laravel that generates Bangla fake data for seeders and tests.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="tech-badge">Laravel</span>
+                        <span class="tech-badge">Faker</span>
+                        <span class="tech-badge">Bangla</span>
+                    </div>
+                    <div class="composer-cmd">
+                        <code>composer require tusharkhan/banglafaker</code>
+                        <button type="button" class="copy-btn" data-copy="composer require tusharkhan/banglafaker" aria-label="Copy install command"><i class="far fa-copy"></i></button>
+                    </div>
+                    <div class="package-links">
+                        <a href="https://github.com/tusharkhan/banglafaker" target="_blank" rel="noopener" class="project-btn"><i class="fab fa-github mr-2"></i>GitHub</a>
+                        <a href="https://packagist.org/packages/tusharkhan/banglafaker" target="_blank" rel="noopener" class="project-btn"><i class="fas fa-box mr-2"></i>Packagist</a>
+                    </div>
+                </div>
+
+                <!-- Package: File Database -->
+                <div class="package-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="package-icon"><i class="fas fa-file-alt"></i></div>
+                        <span class="package-version">v1.2.0</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">File Database</h3>
+                    <p class="text-white/60 text-sm mb-4">
+                        A simple file-based database for PHP.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="tech-badge">PHP</span>
+                        <span class="tech-badge">Database</span>
+                    </div>
+                    <div class="composer-cmd">
+                        <code>composer require tusharkhan/file-database</code>
+                        <button type="button" class="copy-btn" data-copy="composer require tusharkhan/file-database" aria-label="Copy install command"><i class="far fa-copy"></i></button>
+                    </div>
+                    <div class="package-links">
+                        <a href="https://github.com/Soft-Valley/File-database" target="_blank" rel="noopener" class="project-btn"><i class="fab fa-github mr-2"></i>GitHub</a>
+                        <a href="https://packagist.org/packages/tusharkhan/file-database" target="_blank" rel="noopener" class="project-btn"><i class="fas fa-box mr-2"></i>Packagist</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-12" data-aos="fade-up">
+                <a href="https://packagist.org/users/tusharkhan/" target="_blank" rel="noopener" class="btn-secondary px-8 py-4 rounded-full text-base font-semibold inline-flex items-center">
+                    View all on Packagist <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
     <!-- Contact Section -->
     <section id="contact" class="section relative py-20 md:py-32 bg-gradient-to-b from-dark/50 to-darker">
         <div class="container">
@@ -751,6 +906,6 @@
             offset: 50
         });
     </script>
-    <script src="js/main.js?v=20261115"></script>
+    <script src="js/main.js?v=20261116"></script>
 </body>
 </html>
